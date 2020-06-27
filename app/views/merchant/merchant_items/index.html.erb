@@ -17,7 +17,7 @@
         Inactive
         <button><%= link_to "Activate", "/merchant/items/#{item.id}", method: :patch %></button>
     <% end %>
-    <p><%= link_to "Edit" , "/merchant/items/#{item.id}", method: :get%></p>
+    <p><%= link_to "Edit" , edit_merchant_merchant_item_path("#{item.id}")%></p>
     <%if item.never_sold?(item.id)%>
                 <%=link_to "Delete item", "/merchant/items/#{item.id}", method: :delete %>
     <%end%>
