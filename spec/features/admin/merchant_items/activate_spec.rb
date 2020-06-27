@@ -11,7 +11,7 @@ RSpec.describe "Admin Can Activate Item" do
     tire = bike_shop.items.create(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12, active?:false)
     helmet = bike_shop.items.create(name: "Brain Keeper", description: "Will keep your brain in one piece!", price: 30, image: "https://green.harvard.edu/sites/green.harvard.edu/files/field-feature/explore_area_image/bikehelmet_0.jpg", inventory: 6, active?:false)
 
-    visit "/admin/merchants/#{bike_shop.id}/items"
+    visit admin_merchant_merchant_items_path(bike_shop.id)
 
     within ".items-#{tire.id}" do
       expect(page).to have_content("Inactive")
