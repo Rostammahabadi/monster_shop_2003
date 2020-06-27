@@ -3,22 +3,22 @@ class Merchant::MerchantItemsController < Merchant::BaseController
     def index
       @user = current_user
     end
-  
+
    def show
       @items = Item.where("merchant_id = #{params[:id]}")
     end
-  
+
    def edit
-      @item = Item.find(params[:item_id])
+      @item = Item.find(params[:id])
       @merchant = current_user
     end
 
     def new
         @merchant = current_user
     end
-  
+
     def update
-      @item = Item.find(params[:item_id])
+      @item = Item.find(params[:id])
       if params[:edit] == "1"
         @item.update(item_params)
         updateable?
@@ -40,19 +40,19 @@ class Merchant::MerchantItemsController < Merchant::BaseController
         end
     end
 
-    def destroy        
+    def destroy
         item = Item.find(params[:id])
         item.delete
         flash[:notice] = "#{item.name} has been deleted"
         redirect_to "/merchant/items"
-    end 
+    end
 
     private
 
     def merchant_item_params
         params.permit(:name, :description, :image, :price, :inventory, :active?)
-    end 
-  
+    end
+
     def item_params
       params.permit(:name, :description, :price, :image, :inventory)
     end
@@ -68,7 +68,7 @@ class Merchant::MerchantItemsController < Merchant::BaseController
     end
 
   def change_item_status
-    item = Item.find(params[:item_id])
+    item = Item.find(params[:id])
     if item.active? == true
       item.update(active?:false)
       flash[:notice] = "#{item.name} is no longer for sale"
