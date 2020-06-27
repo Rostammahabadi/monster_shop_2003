@@ -1,7 +1,7 @@
 class Admin::MerchantItemsController < Admin::BaseController
 
     def index
-      @merchant = Merchant.find(params[:id])
+      @merchant = Merchant.find(params[:merchant_id])
     end
 
     def edit
@@ -10,7 +10,7 @@ class Admin::MerchantItemsController < Admin::BaseController
     end
 
     def update
-      item = Item.find(params[:item_id])
+      item = Item.find(params[:id])
       merchant = Merchant.find(params[:merchant_id])
       if params[:edit] == 1
         item.update(item_params)
