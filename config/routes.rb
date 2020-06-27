@@ -47,32 +47,20 @@ Rails.application.routes.draw do
   namespace :merchant do
     get '/', to: 'dashboard#index'
     get '/dashboard', to: 'dashboard#index'
-    get '/items', to: 'merchant_items#index'
-    delete '/items/:id', to: 'merchant_items#destroy'
-    get '/items/new', to: 'merchant_items#new'
-    post '/items', to: 'merchant_items#create'
-    patch '/items', to: 'merchant_items#update'
+    resources :merchant_items, path: 'items'
     get '/items/:item_id', to: 'merchant_items#edit'
     patch '/items/:item_id', to: 'merchant_items#update'
-    get '/orders', to: 'orders#index'
-    get '/orders/:id', to: 'orders#show'
-    patch '/orders/:id', to: 'orders#update'
+    resources :orders, only: [:index, :show, :update]
   end
 
   namespace :admin do
     get '/', to: 'dashboard#index'
     get '/dashboard', to: 'dashboard#index'
-    get '/merchants/:id', to: 'merchants#show'
-    get '/merchants', to: 'merchants#index'
-    patch '/merchants/:id', to: 'merchants#update'
-    get '/orders', to: 'orders#update'
-    get '/merchants', to: 'merchants#index'
-    patch '/merchants/:id', to: 'merchants#update'
-    get '/merchants/:merchant_id/items/:item_id', to: 'merchant_items#edit'
-    get '/merchants/:id/items', to: 'merchant_items#index'
-    patch '/merchants/:merchant_id/items/:item_id', to: 'merchant_items#update'
-    get '/users', to: 'users#index'
-    get '/users/:id', to: 'users#show'
+    resources :orders, only: [:update, :show]
+    resources :merchants do
+      resources :merchant_items, path: 'items'
+    end
+    resources :users, only: [:index, :show]
     get '/users/:id/orders', to: 'orders#show'
   end
 end
